@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--Vue js -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>-->
+    <script src="assets/js/vue.js"></script>
+    <!--End Vue js-->
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="assets/plugin/bootstrap/css/bootstrap.css">
+    <!--Jquery-->
+    <script src="assets/js/jquery-3.5.1.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>-->
+</head>
+<body>
+<div class="m-3">
+    <div class="container-fluid">
+        <div class="row" id="app">
+            <div class="col-lg-6 bg-white vh-100">
+                <template v-for="(item , index) in config.input">
+                    <div class="row" :key="index">
+                        <div class="form-group">
+                            <!--for="item.display.label"-->
+                            <label>{{item.display.label}}</label>
+                            <input type="text" class="form-control" :class="item.style.input.classes" :style="item.style.input.inline" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                    </div>
+                    <br>
+                    <pre class="">
+                            {{item}}
+                        </pre>
+                </template>
+            </div>
+            <div class="col-lg-6 bg-light vh-100">
+                One of three columns
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/plugin/bootstrap/js/bootstrap.js"></script>
+<script>
+    const _log = (data) => console.log();
+    const Type = {type: "Text"}
+    new Vue({
+        el: "#app",
+        data: {
+            type: Type,
+            config: {
+                tab: [
+                    {
+                        id: 1,
+                        label: "Basic",
+                    },
+                    {
+                        id: 2,
+                        label: "Social Link"
+                    },
+                    {
+                        id: 3,
+                        label: "Contact"
+                    }
+                ],
+                input: [
+                    {
+                        id: 1,
+                        tab: 1,
+                        type: "Text",
+                        display: {
+                            label: "Business Name",
+                            name: "businessName",
+                            placeholder: "Your Business Name",
+                        },
+                        html: {
+                            type: "text",
+                            notice: null
+                        },
+                        style: {
+                            container: {
+                                inline: {},
+                                classes: {}
+                            },
+                            input: {
+                                inline: {color: "red"},
+                                classes: {active: true}
+                            }
+                        },
+                        validation: {
+                            required: true,
+                            max: 255,
+                            isEmail: false,
+                            isUrl: false
+                        }
+                    }
+                ]
+            }
+        },
+        method: {
+            validater: function (event, newVal) {
+                const {validate} = this.config.input[0].validation;
+
+                isRequired()
+                {
+                    _log('required' + isRequired);
+                }
+            }
+
+        }
+    })
+</script>
+</body>
+</html>
