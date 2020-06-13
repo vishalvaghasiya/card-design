@@ -32,8 +32,9 @@
                                    class="form-control" :class="item.style.input.classes"
                                    :style="item.style.input.inline"
                                    :id="item.display.id"
-                                   @click="validate($event ,item.validation , index)"
+                                   @change="validate($event.target.value , index)"
                                    aria-describedby="emailHelp">
+                            <small class="form-text text-danger">{{}}</small>
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                                 else.</small>
                         </div>
@@ -103,7 +104,12 @@
                             required: true,
                             max: 255,
                             isEmail: false,
-                            isUrl: false
+                            isUrl: true,
+                            result:{
+
+                                message:null,
+
+                            }
                         },
                         data: {
                             default: 'vish Industry'
@@ -113,33 +119,40 @@
             }
         },
         methods: {
-            validate: function (event, newVal, index) {
+            validate: function (event, index) {
                 const validateObj = this.config.input[0].validation;
-                console.log('work')
-                _log('work' + validateObj)
-                _log('work' + JSON.stringify(validateObj))
+                let message = [];
+
+                _log('event input value = ' + event) // vish
+                /*_log('newVal = ' + JSON.stringify(newVal)) // newVal = {"required":true,"max":255,"isEmail":false,"isUrl":false}
+                _log('newVal = ' + newVal) // newVal = [object Object]*/
+                console.log('work') //work
+                _log('work = ' + validateObj) // work = [object Object]
+                _log('work = ' + JSON.stringify(validateObj)) //work = {"required":true,"max":255,"isEmail":false,"isUrl":false}
+
                 if (validateObj.required) {
                     _log('required')
                 }
-                /*
-                if (validate.max) {
+                if (event.length >= validateObj.max) {
                     _log('max')
                 }
-                if (validate.isEmail) {
-                    _log("Email")
+                if (validateObj.isEmail) {
+                    // _log("Email")
                     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    re.test(String(newVal));
+                    _log('email ' + re.test(String(event)));
                 }
-                if (validate.isUrl) {
-                    _log("url");
+                if (validateObj.isUrl) {
+                    // _log("url");
                     let pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
                         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
                         '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
                         '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
                         '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
                         '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-                    pattern.test(newVal);
-                }*/
+                    _log('url ' + pattern.test(event))
+                    message.push(pattern.test(event));
+                }
+                _log(message);
             }
 
         }
