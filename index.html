@@ -114,12 +114,14 @@
         },
         methods: {
             validate: function (event, newVal, index) {
-                /*const {validate} = this.config.input[0].validation;*/
+                const validateObj = this.config.input[0].validation;
                 console.log('work')
-                _log('work' + index)
-                /*if (validate.required) {
+                _log('work' + validateObj)
+                _log('work' + JSON.stringify(validateObj))
+                if (validateObj.required) {
                     _log('required')
                 }
+                /*
                 if (validate.max) {
                     _log('max')
                 }
