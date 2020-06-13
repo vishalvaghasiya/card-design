@@ -34,7 +34,7 @@
                                    :id="item.display.id"
                                    @change="validate($event.target.value , index)"
                                    aria-describedby="emailHelp">
-                            <small class="form-text text-danger">{{}}</small>
+                            <small class="form-text text-danger">{{item.validation.result.message[0]}}</small>
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                                 else.</small>
                         </div>
@@ -105,10 +105,8 @@
                             max: 255,
                             isEmail: false,
                             isUrl: true,
-                            result:{
-
-                                message:null,
-
+                            result: {
+                                message: [],
                             }
                         },
                         data: {
@@ -131,7 +129,10 @@
                 _log('work = ' + JSON.stringify(validateObj)) //work = {"required":true,"max":255,"isEmail":false,"isUrl":false}
 
                 if (validateObj.required) {
-                    _log('required')
+                    if (event === '' || event === null) {
+                        _log('required')
+                        message.push("Required Field compulsory")
+                    }
                 }
                 if (event.length >= validateObj.max) {
                     _log('max')
@@ -140,6 +141,8 @@
                     // _log("Email")
                     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     _log('email ' + re.test(String(event)));
+                    if (re.test(String(event)) === false)
+                        message.push("Email invalid")
                 }
                 if (validateObj.isUrl) {
                     // _log("url");
@@ -150,9 +153,12 @@
                         '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
                         '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
                     _log('url ' + pattern.test(event))
-                    message.push(pattern.test(event));
+                    pattern.test(event);
+                    if (pattern.test(event) === false)
+                        message.push("Url invalid")
                 }
                 _log(message);
+                validateObj.result.message = message;
             }
 
         }
