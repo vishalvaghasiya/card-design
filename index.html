@@ -35,7 +35,7 @@
                                    @change="validate($event.target.value , index)"
                                    aria-describedby="emailHelp">
                             <small class="form-text text-danger">{{item.validation.result.message[0]}}</small>
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            <small contenteditable="true" v-on:input="contentEdit($event.target.innerHTML , index)" id="content-edit" class="form-text text-muted">We'll content editable with anyone
                                 else.</small>
                         </div>
                     </div>
@@ -159,6 +159,12 @@
                 }
                 _log(message);
                 validateObj.result.message = message;
+            },
+
+            contentEdit:function (value , index) {
+                _log('value = ' + value);
+                // _log(value.target.innerText);
+
             }
 
         }
