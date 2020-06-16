@@ -37,6 +37,8 @@
                             <small class="form-text text-danger">{{item.validation.result.message[0]}}</small>
                             <small contenteditable="true" v-on:input="contentEdit($event.target.innerHTML , index)" id="content-edit" class="form-text text-muted">We'll content editable with anyone
                                 else.</small>
+
+                            Notice : {{item.html.notice}}
                         </div>
                     </div>
                     <br>
@@ -164,7 +166,7 @@
             contentEdit:function (value , index) {
                 _log('value = ' + value);
                 // _log(value.target.innerText);
-
+                this.config.input[0].html.notice = value;
             }
 
         }
